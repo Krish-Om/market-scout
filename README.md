@@ -46,7 +46,8 @@ market-scout/
   - ``` cp .env.exmaple .env ```
 - Edit the .env with valid credentials.
 ## For docker:
-- Run the command ```docker compose up ``` to start the service.
+- Run the command ```docker compose -f compose-development up ``` to start the service locally.
+- Run the command ```docker compose -f compose-deployment up ``` to start the service in deployment.
 
 ## For local dev:
 - Run the command ```uv run fastapi dev``` inside the root project directory.
