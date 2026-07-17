@@ -1,0 +1,44 @@
+services:
+  app:
+    container_name: marketScout
+    build:
+      context: .
+      dockerfile: ./app/Dockerfile
+    ports:
+      - "127.0.0.1:8000:8000"
+    environment:
+      - ENV=development
+      # Tell the OpenAI compatibility layer inside the container to point to the ollama container
+      - GROQ_API_KEY=${GROQ_API_KEY}
+       # 🤫 Add this dummy key to satisfy CrewAI's strict internal fallback check
+      - OPENAI_API_KEY=na
+      - LITELLM_MODE=production
+      # - REDIS_URL=redis://redis_cache:6379/0
+      - REDIS_URL=redis://redis:6379/0
+    develop:
+      watch:
+        - path: ./app
+          target: /app
+          action: rebuild
+          ignore:
+              - .venv
+    depends_on:
+      redis:
+        condition: service_healthy
+
+  redis:
+    image: redis:latest
+    container_name: ms_redis
+    ports:
+      - "127.0.0.1:6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  redis_data:
+    driver: local
