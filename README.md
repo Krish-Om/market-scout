@@ -1,5 +1,6 @@
 ### Introduction:
 This is an API application that demonstrates two simple agents working together to research and analyze a niche topic, “Clean Beauty and Preventive Wellness”. I have used the open-source framework CrewAI [CrewAI](https://docs.crewai.com) to build this application and wrapped it with FastAPI [FastAPI](https://fastapi.tiangolo.com), using Swagger [Swagger](https://swagger.io/) Docs for interaction.
+It is live at this link: [link](https://homeserver.saury-company.ts.net/docs)
 
 ### Prerequisites:
 - Python 3.11+
