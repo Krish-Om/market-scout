@@ -43,6 +43,8 @@ market-scout/
 ### How to run:
 - Clone this repo.
 - Setup the environment file with valid credentials.
+  - ``` cp .env.exmaple .env ```
+- Edit the .env with valid credentials.
 ## For docker:
 - Run the command ```docker compose up ``` to start the service.
 
