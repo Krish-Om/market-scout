@@ -3,9 +3,9 @@ This is an API application that demonstrates two simple agents working together 
 
 ### Prerequisites:
 - Python 3.11+
-- Docker (for deployment) or Podman
+- Docker[docker](https://docs.docker.com/get-started/get-docker) (for deployment) or Podman [podman](https://podman.io/docs/installation)
 - Ollama/llama3.1:8b model (for local development)
-- uv # For Project and Package management.
+- uv [uv](https://docs.astral.sh/uv/getting-started/installation/) # For Project and Package management.
 - Groq API Key [GROQ](https://console.groq.com).
 
 ### Models Used:
@@ -44,7 +44,7 @@ market-scout/
 - Clone this repo.
 - Setup the environment file with valid credentials.
 ## For docker:
-- Run the command ```sh docker compose up ``` to start the service.
+- Run the command ```docker compose up ``` to start the service.
 
 ## For local dev:
-- Run the command ```sh uv run fastapi dev``` inside the root project directory.
+- Run the command ```uv run fastapi dev``` inside the root project directory.
