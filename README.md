@@ -52,3 +52,17 @@ market-scout/
 
 ## For local dev:
 - Run the command ```uv run fastapi dev``` inside the root project directory.
+
+## Architecture:
+User Request -> FastAPI -> Agent 1 (Research) -> Agent 2 (Scout/Writer) -> Redis -> Response
+
+## AI modes of failure:
+1. Hallucination 🌀: The LLM generates false facts about "clean beauty" ingredients or health regulations.
+
+2. Context Drift & Attention Decay 📉: As the context window fills up, the agent forgets initial constraints or instructions.
+
+3. Structural Breakage 💔: The second agent fails to output valid JSON/Pydantic format, causing your FastAPI backend or Redis parser to crash.
+
+4. Cascading Error Amplification 🌊: Agent 1 makes a minor factual error or assumption, and Agent 2 accepts it as absolute truth, multiplying the error in the final REST API response.
+
+5. API Latency & Timeout Exhaustion ⏳: Because two agents run linearly, the total execution time creeps past your HTTP timeout limits (e.g., 300 seconds), causing the REST API to drop the connection before Redis gets the data.
