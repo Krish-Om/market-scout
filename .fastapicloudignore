@@ -1,0 +1,5 @@
+*.venv
+*__pycache__
+.env
+compose-dev.yml
+compose-deployment.yml
