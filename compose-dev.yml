@@ -6,6 +6,8 @@ services:
       dockerfile: ./app/Dockerfile
     ports:
       - "127.0.0.1:8000:8000"
+    env_file:
+      - .env
     environment:
       - ENV=development
       # Tell the OpenAI compatibility layer inside the container to point to the ollama container

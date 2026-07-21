@@ -6,6 +6,7 @@ readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "crewai[embeddings,litellm]>=1.15.2",
+    "fastapi-cloud-cli>=0.22.2",
     "fastapi[standard]>=0.139.0",
     "redis>=8.0.1",
 ]
