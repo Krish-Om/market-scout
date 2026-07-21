@@ -11,6 +11,7 @@ if api_key:
         llm_type="litellm",
         model="groq/llama-3.1-8b-instant",
         api_key=api_key,
+        stream=False,
     )
 # else: For local development
 #     local_llm = LLM(model="ollama/llama3.1:8b", base_url="http://ollama:11434")

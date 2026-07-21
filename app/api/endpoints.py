@@ -39,13 +39,19 @@ async def worker(job_id: str, topic: str):
         elif crew_output.pydantic:
             result_data = crew_output.pydantic.model_dump()
         else:
-            result_data = str(crew_output.raw)
+            result_data = str(crew_output)
 
         # 3. Save successful state to Redis (Expiring in 2 days to keep it clean)
         r.setex(
             f"job:{job_id}",
             172800,
-            json.dumps({"status": "completed", "result": result_data}),
+            json.dumps(
+                {
+                    "status": "completed",
+                    "result": result_data,
+                    "token_usage": dict(crew_output.token_usage),
+                }
+            ),
         )
         logger.info(f"Job {job_id} completed successfully.")
     except asyncio.TimeoutError:
@@ -97,6 +103,7 @@ async def start_market_scout(payload: ScoutRequest, background_tasks: Background
             job_id=job_id,
             status="pending",
             message="CrewAI successfully kicked off on local GPU, please wait a moment",
+            token_usage={},
         )
     except Exception as e:
         logger.info(msg=e)
@@ -122,11 +129,12 @@ async def get_scout_results(job_id: str):
         logger.debug(
             msg=f"Job id : {job_id} status: {json.loads(job_data).get('status')} result: {json.loads(job_data).get('result')}"
         )
-
+        job_dict = json.loads(job_data)
         return ScoutResponse(
             job_id=job_id,
-            status=json.loads(job_data).get("status"),
-            message=json.loads(job_data).get("result"),
+            status=job_dict.get("status"),
+            message=job_dict.get("result"),
+            token_usage=job_dict.get("token_usage", {}),
         )
     except HTTPException as http_except:
         logger.info(msg=http_except)
